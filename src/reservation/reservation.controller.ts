@@ -12,8 +12,8 @@ export class ReservationController {
   private reservationRepository: Repository<Reservation>, private readonly reservationService: ReservationService) {}
 
   @Post()
-  create(@Body() createReservationDto: CreateReservationDto, numCour: number) {
-    return this.reservationService.create(createReservationDto, numCour);
+  create(@Body() createReservationDto: CreateReservationDto) {
+    return this.reservationService.create(createReservationDto);
   }
 
   @Get()

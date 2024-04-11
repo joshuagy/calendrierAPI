@@ -16,13 +16,14 @@ export class ReservationService {
     private readonly usersRepository: Repository<Cour>
   ) {}
 
-  async create(createReservationDto: CreateReservationDto, numCour: number): Promise<void> {
+  async create(createReservationDto: CreateReservationDto): Promise<void> {
     const { nomEleve, prenomEleve, cour, date_reservation } = createReservationDto;
     if (!nomEleve || !prenomEleve || !cour || !date_reservation) {
       throw new HttpException("Missing fields", HttpStatus.BAD_REQUEST);
     }
+    
     const courVerified = await this.usersRepository.findOne({
-      where: { id: numCour },
+      where: { id: createReservationDto.cour.id },
       relations: []
     });
     if (!courVerified) {
