@@ -9,6 +9,8 @@ import { Reservation } from "./reservation/entities/reservation.entity";
 
 import { Cour } from "./cour/entities/cour.entity";
 import { CourModule } from './cour/cour.module';
+import { Annulation } from './annulation/entities/annulation.entity';
+import { AnnulationModule } from './annulation/annulation.module';
 
 @Module({
   imports: [
@@ -20,12 +22,13 @@ import { CourModule } from './cour/cour.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [Reservation, Cour],
+      entities: [Reservation, Cour, Annulation],
       synchronize: true,
       logging: true
     }),
     CourModule,
-    ReservationModule
+    ReservationModule,
+    AnnulationModule
   ],
   controllers: [AppController],
   providers: [AppService],

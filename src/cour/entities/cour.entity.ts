@@ -1,5 +1,6 @@
+import { Annulation } from "src/annulation/entities/annulation.entity";
 import { Reservation } from "src/reservation/entities/reservation.entity";
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from "typeorm";
 
 @Entity("Cour")
 export class Cour{

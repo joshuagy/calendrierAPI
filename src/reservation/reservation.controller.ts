@@ -29,7 +29,7 @@ export class ReservationController {
   @Get('/day/:day')
   findByDate(@Param('day') day: string) {
     return this.reservationRepository.find({
-      where: { date_reservation: day }, // Assurez-vous que le nom de la colonne correspond
+      where: { date_reservation: day }, // Assurez-vous que le nom de la colonne correspond 
       relations: ['cour'], // Charge la relation 'cour' pour chaque réservation
     });
   }
