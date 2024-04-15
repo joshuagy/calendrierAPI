@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Delete, Param } from '@nestjs/common';
 import { AnnulationService } from './annulation.service';
 import { Annulation } from './entities/annulation.entity';
+import { CreateAnnulationDto } from './dto/create-annulation.dto';
 
 @Controller('annulation')
 export class AnnulationController {
@@ -12,7 +13,7 @@ export class AnnulationController {
     }
 
     @Post()
-    createAnnulation(@Body() annulation: Annulation): Promise<Annulation> {
+    createAnnulation(@Body() annulation: CreateAnnulationDto): Promise<CreateAnnulationDto> {
         return this.annulationService.create(annulation);
     }
 
