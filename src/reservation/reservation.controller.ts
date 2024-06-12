@@ -44,4 +44,13 @@ export class ReservationController {
   remove(@Param('id') id: string) {
     return this.reservationService.remove(+id);
   }
+  
+  @Get('/course/:courId')
+  findByCourse(@Param('courId') courId: string) {
+    return this.reservationRepository.find({
+      where: { cour: { id: parseInt(courId) } }, // Assurez-vous que les noms de colonne et de relation sont corrects
+      relations: ['cour'], // Charge la relation 'cour' pour chaque réservation
+    });
+  }
+
 }

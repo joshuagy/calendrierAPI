@@ -4,6 +4,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Cour } from './entities/cour.entity';
 import { Repository, Not, In, IsNull } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Reservation } from '../reservation/entities/reservation.entity';
 
 @Injectable()
 export class CourService {
@@ -12,6 +13,8 @@ export class CourService {
   constructor(
     @InjectRepository(Cour)
     private readonly coursRepository: Repository<Cour>,
+    @InjectRepository(Reservation)
+    private readonly reservationRepository: Repository<Reservation>,
   ) {
   }
 
@@ -57,11 +60,33 @@ export class CourService {
   }
 
   async remove(id: number) {
-    const user = await this.coursRepository.findOne({ where: { id: id } });
-    if (!user) {
-        throw new HttpException("User not Found", HttpStatus.NOT_FOUND);
+    const cour = await this.coursRepository.findOne({ where: { id: id } });
+    if (!cour) {
+        throw new HttpException("Cour not found", HttpStatus.NOT_FOUND);
     }
-    await this.coursRepository.remove(user);
+
+    // Vérifiez s'il y a des réservations pour ce cours
+    const reservations = await this.reservationRepository.find({
+      where: { cour: { id: id } },
+      relations: ['cour'], // Charge la relation 'cour' pour chaque réservation
+    });
+
+    if (reservations.length > 0) {
+      for (let i = 0; i < reservations.length; i++) {
+        const reservation = reservations[i];
+        try {
+          await this.reservationRepository.remove(reservation);
+        } catch (error) {
+          throw new HttpException("Error removing reservation", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+      }
+    }
+
+    try {
+      await this.coursRepository.remove(cour);
+    } catch (error) {
+      throw new HttpException("Error removing course", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
 

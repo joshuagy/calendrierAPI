@@ -85,4 +85,15 @@ export class ReservationService {
     }
     await this.reservationRepository.remove(reservation);
   }
+
+  async findByCourse(courId: string) {
+    const reservations = await this.reservationRepository.find({
+      where: { cour: { id: parseInt(courId) } },
+      relations: ['cour']
+    });
+    if (!reservations) {
+      throw new HttpException("Reservation not found", HttpStatus.NOT_FOUND);
+    }
+    return reservations;
+  }
 }
