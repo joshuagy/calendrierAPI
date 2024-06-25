@@ -13,6 +13,11 @@ export class Cour{
     @Column()
     jourDansLaSemaine: number;
 
+    @Column({nullable: true })
+    date_exceptionnelle: string | null;
+
     @OneToMany(() => Reservation, (reservation) => reservation.cour)
     reservations: Reservation[];
+
 }
+   

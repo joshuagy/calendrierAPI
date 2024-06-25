@@ -9,4 +9,6 @@ export class CreateCourDto {
   
     @IsNotEmpty()
     jourDansLaSemaine: number;
+
+    date_exceptionnelle?: string;
 }

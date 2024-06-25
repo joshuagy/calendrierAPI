@@ -25,7 +25,14 @@ export class AnnulationService {
             throw new Error('Invalid course data provided');
         }
 
-        newAnnulation.cour = { id: annulationDto.cour.id, nom: annulationDto.cour.nom, jourDansLaSemaine: annulationDto.cour.jourDansLaSemaine, reservations:annulationDto.cour.reservations }; // Créez un objet cour avec juste l'ID nécessaire
+        newAnnulation.cour = {
+            id: annulationDto.cour.id,
+            nom: annulationDto.cour.nom,
+            jourDansLaSemaine: annulationDto.cour.jourDansLaSemaine,
+            reservations: annulationDto.cour.reservations,
+            date_exceptionnelle: annulationDto.cour.date_exceptionnelle || null // Assurez-vous que cette valeur est correctement transmise ou définie comme null
+          };
+          // Créez un objet cour avec juste l'ID nécessaire
 
         console.log('Prepared entity for insertion:', newAnnulation);
 

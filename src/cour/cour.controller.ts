@@ -17,6 +17,21 @@ export class CourController {
     return this.courService.findAll();
   }
 
+  @Get('regular/')
+  findAllRegular() {
+    return this.courService.findAllRegular();
+  }
+
+  @Get('date/:customdate')
+  findCoursesByDate(@Param('customdate') dateString: string) {
+    return this.courService.findCoursesByDate(dateString);
+  }
+
+  @Get('date')
+  getExceptionalCourses() {
+    return this.courService.getExceptionalCourses();
+  }
+  
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.courService.findOne(id);
@@ -25,6 +40,11 @@ export class CourController {
   @Get('day/:day')
   findOneByDay(@Param('day') day: number) {
     return this.courService.findOneByDay(day);
+  }
+
+  @Get('regular/:day')
+  findOneByDayRegular(@Param('day') day: number) {
+    return this.courService.findOneByDayRegular(day);
   }
 
   @Patch(':id')
@@ -36,4 +56,5 @@ export class CourController {
   remove(@Param('id') id: number) {
     return this.courService.remove(id);
   }
+
 }
